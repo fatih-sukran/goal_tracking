@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goal_tracking/routes.dart';
-import 'package:goal_tracking/screens/deneme.dart';
-import 'package:goal_tracking/screens/home_page.dart';
+import 'package:goal_tracking/screens/goal_detail_screen.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'firebase_options.dart';
 
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         // useMaterial3: true,
       ),
-      home: const Deneme(),
+      home: const GoalDetailScreen(id: 'goal_1_id'),
     );
   }
 }

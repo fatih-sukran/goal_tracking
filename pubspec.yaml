@@ -43,6 +43,7 @@ dependencies:
   intl: ^0.18.0
   # firebase_core: ^2.4.1
   syncfusion_flutter_calendar: ^20.4.43
+  hive: ^2.2.3
 
 dev_dependencies:
   flutter_test:

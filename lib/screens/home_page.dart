@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goal_tracking/components/appbar.dart';
 import 'package:goal_tracking/models/goal.dart';
-import 'package:goal_tracking/models/goal_status.dart';
 import 'package:goal_tracking/screens/goal_calender.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
