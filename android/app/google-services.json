@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "810503938108",
+    "project_id": "goal-tracking-55fad",
+    "storage_bucket": "goal-tracking-55fad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810503938108:android:71a93720b2730cb7cf6339",
+        "android_client_info": {
+          "package_name": "com.example.goal_tracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810503938108-t8pia0dpp4e90dr7mtodo422kajgplfk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmQmn7ZMtGFgfJcDMLBRNo_kcXHSTgbkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810503938108-t8pia0dpp4e90dr7mtodo422kajgplfk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "810503938108-2hair6ga2fgcfj0jfv93l98vs2hh98pl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fatih.goaltracking"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810503938108:android:06abaaac270a9269cf6339",
+        "android_client_info": {
+          "package_name": "com.fatih.goaltracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810503938108-b8455fv62p0jbt5lep65ia3u5gkle696.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fatih.goaltracking",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "810503938108-t8pia0dpp4e90dr7mtodo422kajgplfk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmQmn7ZMtGFgfJcDMLBRNo_kcXHSTgbkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810503938108-t8pia0dpp4e90dr7mtodo422kajgplfk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "810503938108-2hair6ga2fgcfj0jfv93l98vs2hh98pl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fatih.goaltracking"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

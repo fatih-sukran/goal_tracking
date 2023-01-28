@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>810503938108-2hair6ga2fgcfj0jfv93l98vs2hh98pl.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.810503938108-2hair6ga2fgcfj0jfv93l98vs2hh98pl</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>810503938108-b8455fv62p0jbt5lep65ia3u5gkle696.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC0Pz-PJ4aZ9r17f2lJZNDPFP3iAup3HbA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>810503938108</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.fatih.goaltracking</string>
+	<key>PROJECT_ID</key>
+	<string>goal-tracking-55fad</string>
+	<key>STORAGE_BUCKET</key>
+	<string>goal-tracking-55fad.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:810503938108:ios:2ee9fe20b9b3fa02cf6339</string>
+</dict>
+</plist>
