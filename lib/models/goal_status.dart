@@ -1,6 +1,17 @@
+import 'package:hive/hive.dart';
+
+part 'goal_status.g.dart';
+
+@HiveType(typeId: 1)
 enum GoalStatus {
+
+  @HiveField(0, defaultValue: true)
   skip,
+
+  @HiveField(1)
   done,
+
+  @HiveField(2)
   fail;
 
   static GoalStatus withIndex(int index) {

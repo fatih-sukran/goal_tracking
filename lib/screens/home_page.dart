@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:goal_tracking/components/appbar.dart';
 import 'package:goal_tracking/models/goal.dart';
-import 'package:goal_tracking/screens/goal_calender.dart';
+import 'package:goal_tracking/screens/goal_detail_screen.dart';
+import 'package:goal_tracking/services/goal_database.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,9 +14,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final GoalDatabase service = GoalDatabase.instance;
+  List<Goal> goals = [];
 
   @override
-  void dispose() {
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await service.openDatabaseConnection();
+      setState(() {
+        goals = service.getGoals();
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() async {
+    await service.closeDatabaseConnection();
     super.dispose();
   }
 
@@ -191,22 +206,6 @@ class _HomePageState extends State<HomePage> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-        // child: FutureBuilder<List<GoalsRecord>>(
-        //   future: queryGoalsRecordOnce(),
-        //   builder: (context, snapshot) {
-        //     // Customize what your widget looks like when it's loading.
-        //     if (!snapshot.hasData) {
-        //       return Center(
-        //         child: SizedBox(
-        //           width: 50,
-        //           height: 50,
-        //           child: CircularProgressIndicator(
-        //             color: FlutterFlowTheme.of(context).primaryColor,
-        //           ),
-        //         ),
-        //       );
-        //     }
-        //     List<GoalsRecord> columnGoalsRecordList = snapshot.data!;
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -219,9 +218,9 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: ((context) => GoalCalender(
-                              goal: goals[columnIndex],
-                            )),
+                        builder: (context) => GoalDetailScreen(
+                          id: goals[columnIndex].id!,
+                        ),
                       ),
                     );
                   },
@@ -267,11 +266,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-final goals = [
-  Goal(name: 'Sabah', startDate: DateTime.now(), status: []),
-  Goal(name: 'Öğle', startDate: DateTime.now(), status: []),
-  Goal(name: 'İkindi', startDate: DateTime.now(), status: []),
-  Goal(name: 'Akşam', startDate: DateTime.now(), status: []),
-  Goal(name: 'Yatsı', startDate: DateTime.now(), status: []),
-];

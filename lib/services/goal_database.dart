@@ -10,10 +10,12 @@ abstract class GoalDatabase {
   void addGoal(Goal goal);
   void removeGoal(Goal goal);
   void removeGoalById(String id);
-  
+
+  Future<void>  openDatabaseConnection();
+  Future<void>  closeDatabaseConnection();
+
   void changeGoalStatus({
     required String id,
     required DateTime dateTime,
   });
-
 }

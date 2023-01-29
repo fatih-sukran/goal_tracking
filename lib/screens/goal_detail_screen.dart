@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:goal_tracking/components/appbar.dart';
 import 'package:goal_tracking/models/goal.dart';
@@ -16,34 +14,52 @@ class GoalDetailScreen extends StatefulWidget {
 }
 
 class _GoalDetailScreenState extends State<GoalDetailScreen> {
-  late Goal goal;
+  Goal? goal;
   final GoalDatabase service = GoalDatabase.instance;
   final CalendarController _calendarController = CalendarController();
 
   @override
   void initState() {
-    goal = service.getGoal(widget.id);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+        await service.openDatabaseConnection();
+      setState(() {
+        goal = service.getGoal(widget.id);
+      });
+    });
     super.initState();
   }
 
   @override
+  void dispose() {
+    service.closeDatabaseConnection();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    log("_DenemeState -> build()");
-    return Scaffold(
+    return goal == null ? loaderBox() : Scaffold(
       appBar: CustomAppBar(
-        title: Text(goal.name),
+        title: Text(goal!.name),
       ),
-      body: SfCalendar(
-        view: CalendarView.month,
-        firstDayOfWeek: 1,
-        controller: _calendarController,
-        monthCellBuilder: monthCellBuilder,
-        showWeekNumber: true,
-        monthViewSettings: const MonthViewSettings(
-          navigationDirection: MonthNavigationDirection.vertical,
-        ),
-        onTap: onTap,
+      body:  calender(),
+    );
+  }
+
+  Widget loaderBox() {
+    return const CircularProgressIndicator();
+  }
+
+  SfCalendar calender() {
+    return SfCalendar(
+      view: CalendarView.month,
+      firstDayOfWeek: 1,
+      controller: _calendarController,
+      monthCellBuilder: monthCellBuilder,
+      showWeekNumber: true,
+      monthViewSettings: const MonthViewSettings(
+        navigationDirection: MonthNavigationDirection.vertical,
       ),
+      onTap: onTap,
     );
   }
 
@@ -55,7 +71,7 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
   }
 
   Widget monthCellBuilder(BuildContext context, MonthCellDetails details) {
-    GoalStatus status = goal.records[details.date] ?? GoalStatus.skip;
+    GoalStatus status = goal!.records[details.date] ?? GoalStatus.skip;
 
     return Column(
       children: [
