@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:goal_tracking/components/appbar.dart';
+import 'package:goal_tracking/models/goal.dart';
+import 'package:goal_tracking/screens/goal_detail_screen.dart';
+import 'package:goal_tracking/screens/home_page.dart';
+import 'package:goal_tracking/services/goal_database.dart';
 
 class CreateGoal extends StatefulWidget {
   const CreateGoal({Key? key}) : super(key: key);
@@ -9,10 +13,11 @@ class CreateGoal extends StatefulWidget {
 }
 
 class _CreateGoalState extends State<CreateGoal> {
-  TextEditingController? goalNameController;
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
+
+  late TextEditingController goalNameController;
 
   @override
   void initState() {
@@ -23,7 +28,7 @@ class _CreateGoalState extends State<CreateGoal> {
   @override
   void dispose() {
     _unfocusNode.dispose();
-    goalNameController?.dispose();
+    goalNameController.dispose();
     super.dispose();
   }
 
@@ -45,10 +50,29 @@ class _CreateGoalState extends State<CreateGoal> {
     );
   }
 
+  void onTap() {
+    String name = goalNameController.value.text;
+    if (name.isEmpty) {
+      return;
+    }
+    Goal goal = Goal(name: name);
+    GoalDatabase.instance.addGoal(goal);
+
+    goalNameController.clear();
+    Navigator.pop(
+      context,
+      MaterialPageRoute(
+        builder: (context) => GoalDetailScreen(
+          id: goal.id!,
+        ),
+      ),
+    );
+  }
+
   Form _createGoalForm(BuildContext context) {
     return Form(
       key: formKey,
-      autovalidateMode: AutovalidateMode.disabled,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,7 +81,7 @@ class _CreateGoalState extends State<CreateGoal> {
             mainAxisSize: MainAxisSize.max,
             children: [
               _goalNameInput(context),
-              _datesInput(context),
+              // _datesInput(context),
             ],
           ),
           _createTaskButton(),
@@ -193,14 +217,7 @@ class _CreateGoalState extends State<CreateGoal> {
   Padding _createTaskButton() {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 16),
-      child: ElevatedButton(
-          onPressed: () async {
-            if (formKey.currentState == null ||
-                !formKey.currentState!.validate()) {
-              return;
-            }
-          },
-          child: const Text('Create Task')),
+      child: ElevatedButton(onPressed: onTap, child: const Text('Create Task')),
     );
   }
 }

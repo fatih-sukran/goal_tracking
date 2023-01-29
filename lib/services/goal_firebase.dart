@@ -2,6 +2,7 @@ import 'package:goal_tracking/constants.dart';
 import 'package:goal_tracking/models/goal.dart';
 import 'package:goal_tracking/models/goal_status.dart';
 import 'package:goal_tracking/services/goal_database.dart';
+import 'package:goal_tracking/util/helper.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class GoalFirebase implements GoalDatabase {
@@ -14,6 +15,7 @@ class GoalFirebase implements GoalDatabase {
 
   @override
   void addGoal(Goal goal) {
+    goal.id ??= generateRandomString(10);
     goalBox.put(goal.id, goal);
   }
 
