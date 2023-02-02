@@ -6,7 +6,7 @@ import 'package:goal_tracking/util/helper.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class GoalFirebase implements GoalDatabase {
-  late Box<Goal> goalBox;
+  static late Box<Goal> goalBox;
 
   @override
   List<Goal> getGoals() {
@@ -32,6 +32,14 @@ class GoalFirebase implements GoalDatabase {
   @override
   void removeGoalById(String id) {
     goalBox.delete(id);
+  }
+
+  @override 
+  Stream<List<Goal>> streamGoals() async* {
+    while (true) {
+      yield goalBox.values.toList();
+      await Future.delayed(const Duration(seconds: 1));
+    }
   }
 
   @override

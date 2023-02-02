@@ -3,6 +3,8 @@ import 'package:goal_tracking/models/goal.dart';
 import 'package:goal_tracking/models/goal_status.dart';
 import 'package:goal_tracking/routes.dart';
 import 'package:goal_tracking/screens/home_page.dart';
+import 'package:goal_tracking/services/goal_database.dart';
+import 'package:goal_tracking/services/goal_firebase.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
@@ -15,6 +17,7 @@ Future<void> hiveSetup() async {
   await Hive.initFlutter();
   Hive.registerAdapter(GoalAdapter());
   Hive.registerAdapter(GoalStatusAdapter());
+  await GoalDatabase.instance.openDatabaseConnection();
 }
 
 class MyApp extends StatelessWidget {
@@ -32,6 +35,4 @@ class MyApp extends StatelessWidget {
       home: const HomePage(),
     );
   }
-
-  
 }

@@ -46,6 +46,20 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
+  # flutter flow
+  auto_size_text: 3.0.0
+  badges: 2.0.2
+  cached_network_image: 3.2.1
+  flutter_cache_manager: 3.3.0
+  font_awesome_flutter: 10.1.0
+  from_css_color: 2.0.0
+  json_path: 0.4.1
+  page_transition: 2.0.4
+  shared_preferences: 2.0.15
+  sqflite: 2.2.0+2
+  timeago: 3.2.2
+  url_launcher: 6.1.5
+
 dev_dependencies:
   hive_generator: ^2.0.0
   build_runner: ^2.3.3

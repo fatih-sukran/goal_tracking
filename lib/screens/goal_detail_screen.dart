@@ -14,34 +14,28 @@ class GoalDetailScreen extends StatefulWidget {
 }
 
 class _GoalDetailScreenState extends State<GoalDetailScreen> {
-  Goal? goal;
   final GoalDatabase service = GoalDatabase.instance;
   final CalendarController _calendarController = CalendarController();
+  late final Goal goal;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-        await service.openDatabaseConnection();
-      setState(() {
-        goal = service.getGoal(widget.id);
-      });
-    });
+    goal = service.getGoal(widget.id);
     super.initState();
   }
 
   @override
   void dispose() {
-    service.closeDatabaseConnection();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return goal == null ? loaderBox() : Scaffold(
+    return Scaffold(
       appBar: CustomAppBar(
-        title: Text(goal!.name),
+        title: Text(goal.name),
       ),
-      body:  calender(),
+      body: calender(),
     );
   }
 
@@ -71,7 +65,7 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
   }
 
   Widget monthCellBuilder(BuildContext context, MonthCellDetails details) {
-    GoalStatus status = goal!.records[details.date] ?? GoalStatus.skip;
+    GoalStatus status = goal.records[details.date] ?? GoalStatus.skip;
 
     return Column(
       children: [

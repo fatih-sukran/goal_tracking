@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goal_tracking/components/appbar.dart';
+import 'package:goal_tracking/components/goal_list_item_widget.dart';
 import 'package:goal_tracking/models/goal.dart';
 import 'package:goal_tracking/screens/goal_detail_screen.dart';
 import 'package:goal_tracking/services/goal_database.dart';
@@ -15,30 +16,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final GoalDatabase service = GoalDatabase.instance;
-  List<Goal> goals = [];
 
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await service.openDatabaseConnection();
-      setState(() {
-        goals = service.getGoals();
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() async {
-    await service.closeDatabaseConnection();
-    super.dispose();
-  }
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      // backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       floatingActionButton: floatingActionButton(context),
       appBar: appBar(context),
       body: SafeArea(
@@ -80,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                 child: Text(
                   'Goal Summary',
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               Padding(
@@ -103,11 +85,11 @@ class _HomePageState extends State<HomePage> {
                               animation: true,
                               progressColor: Theme.of(context).primaryColor,
                               backgroundColor:
-                                  Theme.of(context).backgroundColor,
+                                  Theme.of(context).colorScheme.background,
                               center: Text('23%',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1
+                                      .bodyLarge
                                       ?.copyWith(
                                           fontFamily: 'Poppins',
                                           color:
@@ -116,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Text(
                             'Last 30 Days Goals',
-                            style: Theme.of(context).textTheme.bodyText2,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),
@@ -136,12 +118,12 @@ class _HomePageState extends State<HomePage> {
                               progressColor:
                                   Theme.of(context).colorScheme.secondary,
                               backgroundColor:
-                                  Theme.of(context).backgroundColor,
+                                  Theme.of(context).colorScheme.background,
                               center: Text(
                                 '93%',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyLarge
                                     ?.copyWith(
                                       fontFamily: 'Poppins',
                                       color: Theme.of(context)
@@ -153,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Text(
                             'Today Goals',
-                            style: Theme.of(context).textTheme.bodyText2,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),
@@ -206,61 +188,20 @@ class _HomePageState extends State<HomePage> {
     return Expanded(
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: List.generate(goals.length, (columnIndex) {
-              return Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
-                child: InkWell(
-                  onTap: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => GoalDetailScreen(
-                          id: goals[columnIndex].id!,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: Theme.of(context).dividerColor,
-                        width: 2,
-                      ),
-                    ),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            goals[columnIndex].name,
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 4, 0, 0),
-                            child: Text(
-                              'Goal Details -> Date: ${goals[columnIndex].startDate}',
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+        child: StreamBuilder<List<Goal>>(
+          stream: service.streamGoals(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return SingleChildScrollView(
+                child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: List.generate(snapshot.data!.length,
+                        (index) => GoalListItemWidget(goal: snapshot.data![index]))),
               );
-            }),
-          ),
+            }
+            return Container();
+          },
         ),
       ),
     );
